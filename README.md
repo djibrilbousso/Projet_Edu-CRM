@@ -94,3 +94,6 @@ Pour regrouper les routes par module (`/auth/login`, `/students/`) sans répéte
 
 **Où doit se trouver la logique métier ?**
 Dans `app/services/*_service.py` uniquement. Jamais dans les routes.
+=======
+# Projet_Edu-CRM
+>>>>>>> 0a52b62657df390d224627e5a2b508cd264c5402
