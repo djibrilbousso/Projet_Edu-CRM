@@ -1,27 +1,39 @@
 {% extends 'base.html' %}
-
 {% block title %}Ajouter un cours{% endblock %}
 {% block topbar_title %}Cours{% endblock %}
 {% block page_title %}Ajouter un cours{% endblock %}
 {% block page_subtitle %}Nouveau cours dans le catalogue{% endblock %}
-
 {% block content %}
 <div class="card">
   <form method="POST">
     <div style="display:grid; grid-template-columns:2fr 1fr; gap:20px;">
       <div class="form-group" style="margin-bottom:0;">
         <label class="form-label">Titre du cours</label>
-        <input type="text" name="title" class="form-input" placeholder="Ex : Introduction à l'algorithmique" required>
+        <input type="text" name="title" class="form-input" 
+               placeholder="Ex : Introduction à l'algorithmique" required>
       </div>
       <div class="form-group" style="margin-bottom:0;">
-        <label class="form-label">ID Enseignant</label>
-        <input type="number" name="teacher_id" class="form-input" placeholder="Ex : 1" min="1" required>
+        <label class="form-label">Enseignant responsable</label>
+        {% if teachers %}
+          <select name="teacher_id" class="form-input" required>
+            <option value="">-- Choisir un enseignant --</option>
+            {% for t in teachers %}
+              <option value="{{ t.id }}">{{ t.name }} — {{ t.speciality }}</option>
+            {% endfor %}
+          </select>
+        {% else %}
+          <p style="color:red; font-size:13px;">
+            Aucun enseignant disponible. 
+            <a href="{{ url_for('teachers.teachers_add') }}">Ajouter un enseignant d'abord</a>
+          </p>
+        {% endif %}
       </div>
     </div>
     
-    <div style="margin-top:32px; padding-top:24px; border-top:1px solid var(--border); display:flex; justify-content:space-between; align-items:center;">
+    <div style="margin-top:32px; padding-top:24px; border-top:1px solid var(--border); 
+                display:flex; justify-content:space-between; align-items:center;">
       <div style="font-size:13px; color:var(--text-muted);">
-        Consultez la liste des enseignants pour trouver l'ID
+        Tous les champs sont obligatoires
       </div>
       <div style="display:flex; gap:12px;">
         <a href="{{ url_for('courses.index') }}" class="btn-ghost">Annuler</a>

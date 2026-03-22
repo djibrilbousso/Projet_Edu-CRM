@@ -22,7 +22,7 @@ def create():
             return redirect(url_for("students.create"))
         
         if not is_valid_email(email):
-            flash("Email invalide - format requis: exemple@domaine.com", "danger")
+            flash("Email invalide - format requis: halimalena@gmail.com", "danger")
             return redirect(url_for("students.create"))
         
         result = add_student(name, email)
