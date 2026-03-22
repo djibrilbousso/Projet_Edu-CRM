@@ -1,0 +1,62 @@
+{% extends 'base.html' %}
+
+{% block title %}Étudiants{% endblock %}
+{% block topbar_title %}Étudiants{% endblock %}
+{% block page_title %}Étudiants{% endblock %}
+{% block page_subtitle %}Gestion de la liste des étudiants{% endblock %}
+
+{% block page_action %}
+  <a href="{{ url_for('students.create') }}" class="btn-primary">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" width="16" height="16">
+      <line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/>
+    </svg>
+    Ajouter
+  </a>
+{% endblock %}
+
+{% block content %}
+<div class="card">
+  <table>
+    <thead>
+      <tr>
+        <th>Étudiant</th>
+        <th>Email</th>
+        <th>Action</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for s in students %}
+      <tr>
+        <td>
+          <div style="display:flex;align-items:center;gap:12px;">
+            <div style="width:36px;height:36px;border-radius:50%;background:#dbeafe;color:#1d4ed8;font-size:12px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+              {{ s.name[0:2] | upper }}
+            </div>
+            <div>
+              <div style="font-weight:600;font-size:14px;">{{ s.name }}</div>
+              <div style="font-size:12px;color:var(--text-muted);">ID #{{ s.id }}</div>
+            </div>
+          </div>
+        </td>
+        <td style="color:var(--text-muted);font-size:13.5px;">{{ s.email }}</td>
+        <td>
+          <a href="{{ url_for('students.delete', id=s.id) }}" class="btn-danger"
+             onclick="return confirm('Supprimer cet étudiant ?')">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14H6L5 6"/><path d="M10 11v6"/><path d="M14 11v6"/>
+            </svg>
+            Supprimer
+          </a>
+        </td>
+      </tr>
+      {% else %}
+      <tr>
+        <td colspan="3" style="text-align:center;color:var(--text-muted);padding:2.5rem 0;">
+          Aucun étudiant enregistré
+        </td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+{% endblock %}
