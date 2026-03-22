@@ -23,7 +23,7 @@ def teachers_add():
             return redirect(url_for("teachers.teachers_add"))
         
         if not is_valid_email(email):
-            flash("Email invalide - format requis: exemple@domaine.com", "danger")
+            flash("Email invalide - format requis: halimalena@gmail.com", "danger")
             return redirect(url_for("teachers.teachers_add"))
         
         result = add_teacher(name, email, speciality)
