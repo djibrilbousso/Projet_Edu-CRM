@@ -1,5 +1,5 @@
 from flask import Blueprint, render_template, request, redirect, url_for, flash
-from app.utils import login_required
+from app.utils import login_required, is_valid_email
 from app.services.teacher_service import add_teacher, list_teachers, delete_teacher
 
 teachers = Blueprint("teachers", __name__, url_prefix="/teachers")
@@ -20,6 +20,10 @@ def teachers_add():
         
         if not name or not email or not speciality:
             flash("Tous les champs sont obligatoires", "danger")
+            return redirect(url_for("teachers.teachers_add"))
+        
+        if not is_valid_email(email):
+            flash("Email invalide - format requis: exemple@domaine.com", "danger")
             return redirect(url_for("teachers.teachers_add"))
         
         result = add_teacher(name, email, speciality)

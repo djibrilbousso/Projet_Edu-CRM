@@ -46,7 +46,7 @@
           </span>
         </td>
         <td>
-          <form method="POST" action="{{ url_for('teachers.teachers_delete', teacher_id=t.id) }}"
+          <form method="POST" action="{{ url_for('teachers.teachers_delete', id=t.id) }}"
                 onsubmit="return confirm('Supprimer cet enseignant ?')" style="display:inline;">
             <button type="submit" class="btn-danger">
               <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
