@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+
+{% block title %}Ajouter un enseignant{% endblock %}
+{% block topbar_title %}Enseignants{% endblock %}
+{% block page_title %}Ajouter un enseignant{% endblock %}
+{% block page_subtitle %}Nouveau membre du corps professoral{% endblock %}
+
+{% block content %}
+<div class="card">
+  <form method="POST">
+    <div style="display:grid; grid-template-columns:1fr 1fr; gap:20px;">
+      <div class="form-group" style="margin-bottom:0;">
+        <label class="form-label">Nom complet</label>
+        <input type="text" name="name" class="form-input" placeholder="Ex : Dr. Amadou Diallo" required>
+      </div>
+      <div class="form-group" style="margin-bottom:0;">
+        <label class="form-label">Email professionnel</label>
+        <input type="email" name="email" class="form-input" placeholder="Ex : a.diallo@edu.sn" required>
+      </div>
+    </div>
+    
+    <div style="margin-top:20px;">
+      <div class="form-group" style="margin-bottom:0;">
+        <label class="form-label">Spécialité / Département</label>
+        <input type="text" name="speciality" class="form-input" placeholder="Ex : Informatique, Mathématiques, Physique..." required>
+      </div>
+    </div>
+    
+    <div style="margin-top:32px; padding-top:24px; border-top:1px solid var(--border); display:flex; justify-content:space-between; align-items:center;">
+      <div style="font-size:13px; color:var(--text-muted);">
+        Tous les champs sont obligatoires
+      </div>
+      <div style="display:flex; gap:12px;">
+        <a href="{{ url_for('teachers.teachers_list') }}" class="btn-ghost">Annuler</a>
+        <button type="submit" class="btn-primary">Enregistrer l'enseignant</button>
+      </div>
+    </div>
+  </form>
+</div>
+{% endblock %}
