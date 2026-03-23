@@ -1,14 +1,31 @@
 from flask import Blueprint, render_template, request, redirect, url_for, flash
-from app.services.student_service import add_student, list_students, delete_student
 from app.utils import login_required, is_valid_email
+from app.services.student_service import add_student, list_students, delete_student, update_student, get_student_by_id
 
 students_bp = Blueprint("students", __name__, url_prefix="/students")
+
 
 @students_bp.route("/")
 @login_required
 def index():
-    students = list_students()
-    return render_template("students/list.html", students=students)
+    query = request.args.get("q", "").strip()
+    niveau = request.args.get("niveau", "").strip()
+    filiere = request.args.get("filiere", "").strip()
+
+    all_students = list_students()
+    results = []
+
+    for s in all_students:
+        if query and query.lower() not in s["name"].lower():
+            continue
+        if niveau and s["niveau"] != niveau:
+            continue
+        if filiere and s["filiere"] != filiere:
+            continue
+        results.append(s)
+
+    return render_template("students/list.html", students=results, query=query)
+
 
 @students_bp.route("/create", methods=["GET", "POST"])
 @login_required
@@ -16,24 +33,53 @@ def create():
     if request.method == "POST":
         name = request.form.get("name")
         email = request.form.get("email")
-        
-        if not name or not email:
+        niveau = request.form.get("niveau")
+        filiere = request.form.get("filiere")
+
+        if not name or not email or not niveau or not filiere:
             flash("Tous les champs sont obligatoires", "danger")
             return redirect(url_for("students.create"))
-        
+
         if not is_valid_email(email):
-            flash("Email invalide - format requis: exemple@domaine.com", "danger")
+            flash("Email invalide", "danger")
             return redirect(url_for("students.create"))
-        
-        result = add_student(name, email)
+
+        result = add_student(name, email, niveau, filiere)
         if result is None:
             flash("Cet email existe déjà", "danger")
             return redirect(url_for("students.create"))
-        
+
         flash("Étudiant ajouté avec succès", "success")
         return redirect(url_for("students.index"))
-    
+
     return render_template("students/create.html")
+
+
+@students_bp.route("/edit/<int:id>", methods=["GET", "POST"])
+@login_required
+def edit(id):
+    student = get_student_by_id(id)
+
+    if request.method == "POST":
+        name = request.form.get("name")
+        email = request.form.get("email")
+        niveau = request.form.get("niveau")
+        filiere = request.form.get("filiere")
+
+        if not name or not email or not niveau or not filiere:
+            flash("Tous les champs sont obligatoires", "danger")
+            return redirect(url_for("students.edit", id=id))
+
+        if not is_valid_email(email):
+            flash("Email invalide", "danger")
+            return redirect(url_for("students.edit", id=id))
+
+        update_student(id, name, email, niveau, filiere)
+        flash("Étudiant modifié avec succès", "success")
+        return redirect(url_for("students.index"))
+
+    return render_template("students/edit.html", student=student)
+
 
 @students_bp.route("/delete/<int:id>", methods=["POST"])
 @login_required

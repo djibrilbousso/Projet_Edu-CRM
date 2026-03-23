@@ -1,9 +1,9 @@
 {% extends 'base.html' %}
 
-{% block title %}Ajouter un étudiant{% endblock %}
+{% block title %}Modifier un étudiant{% endblock %}
 {% block topbar_title %}Étudiants{% endblock %}
-{% block page_title %}Ajouter un étudiant{% endblock %}
-{% block page_subtitle %}Nouveau membre de l'école{% endblock %}
+{% block page_title %}Modifier un étudiant{% endblock %}
+{% block page_subtitle %}Mettre à jour les informations de l'étudiant{% endblock %}
 
 {% block extra_css %}
 <link rel="stylesheet" href="{{ url_for('static', filename='css/students.css') }}"/>
@@ -17,12 +17,12 @@
       <div class="col-md-6">
         <label class="form-label">Nom complet</label>
         <input type="text" name="name" class="form-input"
-               placeholder="Ex : Amadou Diallo" required>
+               value="{{ student.name }}" required>
       </div>
       <div class="col-md-6">
         <label class="form-label">Email</label>
         <input type="email" name="email" class="form-input"
-               placeholder="Ex : a.diallo@edu.sn" required>
+               value="{{ student.email }}" required>
       </div>
     </div>
 
@@ -31,20 +31,20 @@
         <label class="form-label">Niveau</label>
         <select name="niveau" class="form-input" required>
           <option value="">-- Choisir un niveau --</option>
-          <option value="L1">L1</option>
-          <option value="L2">L2</option>
-          <option value="L3">L3</option>
-          <option value="M1">M1</option>
-          <option value="M2">M2</option>
+          <option value="L1" {% if student.niveau == 'L1' %}selected{% endif %}>L1</option>
+          <option value="L2" {% if student.niveau == 'L2' %}selected{% endif %}>L2</option>
+          <option value="L3" {% if student.niveau == 'L3' %}selected{% endif %}>L3</option>
+          <option value="M1" {% if student.niveau == 'M1' %}selected{% endif %}>M1</option>
+          <option value="M2" {% if student.niveau == 'M2' %}selected{% endif %}>M2</option>
         </select>
       </div>
       <div class="col-md-6">
         <label class="form-label">Filière</label>
         <select name="filiere" class="form-input" required>
           <option value="">-- Choisir une filière --</option>
-          <option value="GLRS">GLRS</option>
-          <option value="CPD">CPD</option>
-          <option value="CDSD">CDSD</option>
+          <option value="GLRS" {% if student.filiere == 'GLRS' %}selected{% endif %}>GLRS</option>
+          <option value="CPD" {% if student.filiere == 'CPD' %}selected{% endif %}>CPD</option>
+          <option value="CDSD" {% if student.filiere == 'CDSD' %}selected{% endif %}>CDSD</option>
         </select>
       </div>
     </div>
@@ -55,7 +55,7 @@
       <div class="d-flex gap-2">
         <a href="{{ url_for('students.index') }}" class="btn-ghost">Annuler</a>
         <button type="submit" class="btn-primary">
-          <i class="bi bi-check-lg"></i> Enregistrer
+          <i class="bi bi-check-lg"></i> Enregistrer les modifications
         </button>
       </div>
     </div>

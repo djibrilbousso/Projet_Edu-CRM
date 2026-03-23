@@ -1,0 +1,62 @@
+
+.student-avatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #07617D 0%, #0891b2 100%);
+    color: white;
+    font-size: 13px;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+  
+  .badge-niveau {
+    background: #e0f2f7;
+    color: #07617D;
+    padding: 4px 12px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 600;
+  }
+  
+  .badge-filiere {
+    background: #fef3c7;
+    color: #92400e;
+    padding: 4px 12px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 600;
+  }
+  
+  .search-wrap {
+    position: relative;
+    display: inline-block;
+  }
+  
+  .search-input {
+    border: 1.5px solid #e5e7eb;
+    border-radius: 10px;
+    padding: 9px 14px 9px 38px;
+    font-size: 13px;
+    font-family: 'Montserrat', sans-serif;
+    outline: none;
+    width: 260px;
+    transition: border-color 0.15s;
+    background: white;
+  }
+  
+  .search-input:focus {
+    border-color: #07617D;
+    box-shadow: 0 0 0 3px rgba(7,97,125,0.08);
+  }
+  
+  .search-icon {
+    position: absolute;
+    left: 11px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #9ca3af;
+  }
