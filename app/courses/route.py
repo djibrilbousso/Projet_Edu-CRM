@@ -1,5 +1,6 @@
 from flask import Blueprint, render_template, request, redirect, url_for, flash
 from app.services.course_service import add_course, list_courses, delete_course
+from app.services.teacher_service import list_teachers
 from app.utils import login_required
 
 courses_bp = Blueprint("courses", __name__, url_prefix="/courses")
@@ -13,6 +14,7 @@ def index():
 @courses_bp.route("/create", methods=["GET", "POST"])
 @login_required
 def create():
+    teachers = list_teachers()
     if request.method == "POST":
         title = request.form.get("title")
         teacher_id = request.form.get("teacher_id")
@@ -29,10 +31,10 @@ def create():
             flash("Enseignant non trouvé", "danger")
             return redirect(url_for("courses.create"))
         
-        flash("Cours ajouté", "success")
+        flash("Cours ajouté avec succès", "success")
         return redirect(url_for("courses.index"))
     
-    return render_template("courses/create.html")
+    return render_template("courses/create.html", teachers=teachers)
 
 @courses_bp.route("/delete/<int:id>", methods=["POST"])
 @login_required
