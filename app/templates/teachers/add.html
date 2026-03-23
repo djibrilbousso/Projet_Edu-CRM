@@ -1,0 +1,54 @@
+{% extends 'base.html' %}
+
+{% block title %}Ajouter un enseignant{% endblock %}
+{% block topbar_title %}Enseignants{% endblock %}
+{% block page_title %}Ajouter un enseignant{% endblock %}
+{% block page_subtitle %}Nouveau membre du corps professoral{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/teachers.css') }}"/>
+{% endblock %}
+
+{% block content %}
+<div class="card">
+  <form method="POST">
+
+    <div class="row g-3">
+      <div class="col-md-6">
+        <label class="form-label">Nom complet</label>
+        <input type="text" name="name" class="form-input"
+               placeholder="Ex : Dr. Amadou Diallo" required>
+      </div>
+      <div class="col-md-6">
+        <label class="form-label">Email professionnel</label>
+        <input type="email" name="email" class="form-input"
+               placeholder="Ex : a.diallo@edu.sn" required>
+      </div>
+    </div>
+
+    <div class="row g-3 mt-1">
+      <div class="col-md-6">
+        <label class="form-label">Spécialité / Département</label>
+        <select name="speciality" class="form-input" required>
+          <option value="">-- Choisir une spécialité --</option>
+          <option value="Python">Python</option>
+          <option value="Algo">Algo</option>
+          <option value="C#">C#</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="d-flex justify-content-between align-items-center mt-4 pt-3"
+         style="border-top:1px solid var(--border);">
+      <span class="text-muted" style="font-size:13px;">Tous les champs sont obligatoires</span>
+      <div class="d-flex gap-2">
+        <a href="{{ url_for('teachers.teachers_list') }}" class="btn-ghost">Annuler</a>
+        <button type="submit" class="btn-primary">
+          <i class="bi bi-check-lg"></i> Enregistrer
+        </button>
+      </div>
+    </div>
+
+  </form>
+</div>
+{% endblock %}

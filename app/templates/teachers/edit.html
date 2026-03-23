@@ -1,0 +1,54 @@
+{% extends 'base.html' %}
+
+{% block title %}Modifier un enseignant{% endblock %}
+{% block topbar_title %}Enseignants{% endblock %}
+{% block page_title %}Modifier un enseignant{% endblock %}
+{% block page_subtitle %}Mettre à jour les informations de l'enseignant{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/teachers.css') }}"/>
+{% endblock %}
+
+{% block content %}
+<div class="card">
+  <form method="POST">
+
+    <div class="row g-3">
+      <div class="col-md-6">
+        <label class="form-label">Nom complet</label>
+        <input type="text" name="name" class="form-input"
+               value="{{ teacher.name }}" required>
+      </div>
+      <div class="col-md-6">
+        <label class="form-label">Email professionnel</label>
+        <input type="email" name="email" class="form-input"
+               value="{{ teacher.email }}" required>
+      </div>
+    </div>
+
+    <div class="row g-3 mt-1">
+      <div class="col-md-6">
+        <label class="form-label">Spécialité / Département</label>
+        <select name="speciality" class="form-input" required>
+          <option value="">-- Choisir une spécialité --</option>
+          <option value="Python" {% if teacher.speciality == 'Python' %}selected{% endif %}>Python</option>
+          <option value="Algo" {% if teacher.speciality == 'Algo' %}selected{% endif %}>Algo</option>
+          <option value="C#" {% if teacher.speciality == 'C#' %}selected{% endif %}>C#</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="d-flex justify-content-between align-items-center mt-4 pt-3"
+         style="border-top:1px solid var(--border);">
+      <span class="text-muted" style="font-size:13px;">Tous les champs sont obligatoires</span>
+      <div class="d-flex gap-2">
+        <a href="{{ url_for('teachers.teachers_list') }}" class="btn-ghost">Annuler</a>
+        <button type="submit" class="btn-primary">
+          <i class="bi bi-check-lg"></i> Enregistrer les modifications
+        </button>
+      </div>
+    </div>
+
+  </form>
+</div>
+{% endblock %}

@@ -1,0 +1,85 @@
+{% extends 'base.html' %}
+
+{% block title %}Enseignants{% endblock %}
+{% block topbar_title %}Enseignants{% endblock %}
+{% block page_title %}Enseignants{% endblock %}
+{% block page_subtitle %}Gestion de la liste des enseignants{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/teachers.css') }}"/>
+{% endblock %}
+
+{% block page_action %}
+  <a href="{{ url_for('teachers.teachers_add') }}" class="btn-primary">
+    <i class="bi bi-person-plus-fill"></i> Ajouter
+  </a>
+{% endblock %}
+
+{% block content %}
+
+<!-- Barre de recherche -->
+<form method="GET" action="{{ url_for('teachers.teachers_list') }}" class="mb-3">
+  <div class="search-wrap">
+    <span class="search-icon">
+      <i class="bi bi-search"></i>
+    </span>
+    <input type="text" name="q" class="search-input"
+           placeholder="Rechercher par nom..."
+           value="{{ query | trim }}">
+  </div>
+  <button type="submit" style="display:none;"></button>
+</form>
+
+<!-- Table -->
+<div class="card">
+  <table>
+    <thead>
+      <tr>
+        <th>Enseignant</th>
+        <th>Email</th>
+        <th>Spécialité</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for t in teachers %}
+      <tr>
+        <td>
+          <div class="d-flex align-items-center gap-2">
+            <div class="teacher-avatar">{{ t.name[0:2] | upper }}</div>
+            <div>
+              <div class="fw-semibold" style="font-size:14px;">{{ t.name }}</div>
+              <div class="text-muted" style="font-size:12px;">ID #{{ t.id }}</div>
+            </div>
+          </div>
+        </td>
+        <td class="text-muted" style="font-size:13px;">{{ t.email }}</td>
+        <td>
+          <span class="badge-speciality">{{ t.speciality }}</span>
+        </td>
+        <td>
+          <div class="d-flex gap-2">
+            <a href="{{ url_for('teachers.teachers_edit', id=t.id) }}" class="btn-ghost">
+              <i class="bi bi-pencil"></i> Modifier
+            </a>
+            <form method="POST" action="{{ url_for('teachers.teachers_delete', id=t.id) }}"
+                  onsubmit="return confirm('Supprimer cet enseignant ?')">
+              <button type="submit" class="btn-danger">
+                <i class="bi bi-trash"></i> Supprimer
+              </button>
+            </form>
+          </div>
+        </td>
+      </tr>
+      {% else %}
+      <tr>
+        <td colspan="4" class="text-center text-muted py-4">
+          Aucun enseignant enregistré
+        </td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+
+{% endblock %}
