@@ -5,53 +5,100 @@
 {% block page_title %}Étudiants{% endblock %}
 {% block page_subtitle %}Gestion de la liste des étudiants{% endblock %}
 
+{% block extra_css %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/students.css') }}"/>
+{% endblock %}
+
 {% block page_action %}
   <a href="{{ url_for('students.create') }}" class="btn-primary">
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" width="16" height="16">
-      <line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/>
-    </svg>
-    Ajouter
+    <i class="bi bi-person-plus-fill"></i> Ajouter
   </a>
 {% endblock %}
 
 {% block content %}
+<!-- Barre de recherche -->
+<form method="GET" action="{{ url_for('students.index') }}" class="mb-3">
+  <div class="row g-2">
+    <div class="col-md-4">
+      <div class="search-wrap w-100">
+        <span class="search-icon">
+          <i class="bi bi-search"></i>
+        </span>
+        <input type="text" name="q" class="search-input w-100"
+               placeholder="Rechercher par nom..."
+               value="{{ query }}">
+      </div>
+    </div>
+    <div class="col-md-3">
+      <select name="niveau" class="form-input">
+        <option value="">Tous les niveaux</option>
+        <option value="L1" {% if request.args.get('niveau') == 'L1' %}selected{% endif %}>L1</option>
+        <option value="L2" {% if request.args.get('niveau') == 'L2' %}selected{% endif %}>L2</option>
+        <option value="L3" {% if request.args.get('niveau') == 'L3' %}selected{% endif %}>L3</option>
+        <option value="M1" {% if request.args.get('niveau') == 'M1' %}selected{% endif %}>M1</option>
+        <option value="M2" {% if request.args.get('niveau') == 'M2' %}selected{% endif %}>M2</option>
+      </select>
+    </div>
+    <div class="col-md-3">
+      <select name="filiere" class="form-input">
+        <option value="">Toutes les filières</option>
+        <option value="GLRS" {% if request.args.get('filiere') == 'GLRS' %}selected{% endif %}>GLRS</option>
+        <option value="CPD" {% if request.args.get('filiere') == 'CPD' %}selected{% endif %}>CPD</option>
+        <option value="CDSD" {% if request.args.get('filiere') == 'CDSD' %}selected{% endif %}>CDSD</option>
+      </select>
+    </div>
+    <div class="col-md-2">
+      <button type="submit" class="btn-primary w-100">
+        <i class="bi bi-funnel"></i> Filtrer
+      </button>
+    </div>
+  </div>
+</form>
+
+<!-- Table -->
 <div class="card">
   <table>
     <thead>
       <tr>
         <th>Étudiant</th>
         <th>Email</th>
-        <th>Action</th>
+        <th>Niveau</th>
+        <th>Filière</th>
+        <th>Actions</th>
       </tr>
     </thead>
     <tbody>
       {% for s in students %}
       <tr>
         <td>
-          <div style="display:flex;align-items:center;gap:12px;">
-            <div style="width:36px;height:36px;border-radius:50%;background:#dbeafe;color:#1d4ed8;font-size:12px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0;">
-              {{ s.name[0:2] | upper }}
-            </div>
+          <div class="d-flex align-items-center gap-2">
+            <div class="student-avatar">{{ s.name[0:2] | upper }}</div>
             <div>
-              <div style="font-weight:600;font-size:14px;">{{ s.name }}</div>
-              <div style="font-size:12px;color:var(--text-muted);">ID #{{ s.id }}</div>
+              <div class="fw-semibold" style="font-size:14px;">{{ s.name }}</div>
+              <div class="text-muted" style="font-size:12px;">ID #{{ s.id }}</div>
             </div>
           </div>
         </td>
-        <td style="color:var(--text-muted);font-size:13.5px;">{{ s.email }}</td>
+        <td class="text-muted" style="font-size:13px;">{{ s.email }}</td>
+        <td><span class="badge-niveau">{{ s.niveau }}</span></td>
+        <td><span class="badge-filiere">{{ s.filiere }}</span></td>
         <td>
-          <a href="{{ url_for('students.delete', id=s.id) }}" class="btn-danger"
-             onclick="return confirm('Supprimer cet étudiant ?')">
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-              <polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14H6L5 6"/><path d="M10 11v6"/><path d="M14 11v6"/>
-            </svg>
-            Supprimer
-          </a>
+          <div class="d-flex gap-2">
+            <a href="{{ url_for('students.edit', id=s.id) }}" class="btn-ghost">
+              <i class="bi bi-pencil"></i> Modifier
+            </a>
+            <form method="POST" action="{{ url_for('students.delete', id=s.id) }}"
+                  onsubmit="return confirm('Supprimer cet étudiant ?')">
+              <button type="submit" class="btn-danger">
+                <i class="bi bi-trash"></i> Supprimer
+              </button>
+            </form>
+          </div>
         </td>
       </tr>
       {% else %}
       <tr>
-        <td colspan="3" style="text-align:center;color:var(--text-muted);padding:2.5rem 0;">
+        <td colspan="5" class="text-center text-muted py-4">
           Aucun étudiant enregistré
         </td>
       </tr>
@@ -59,4 +106,5 @@
     </tbody>
   </table>
 </div>
+
 {% endblock %}
