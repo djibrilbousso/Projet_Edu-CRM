@@ -1,5 +1,5 @@
 from flask import Blueprint, render_template, request, redirect, url_for, flash
-from app.utils import login_required, is_valid_email
+from app.utils import login_required, is_valid_email, paginate
 from app.services.teacher_service import add_teacher, list_teachers, delete_teacher, update_teacher, search_teachers, get_teacher_by_id
 
 teachers = Blueprint("teachers", __name__, url_prefix="/teachers")
@@ -14,7 +14,13 @@ def teachers_list():
         all_teachers = search_teachers(query)
     else:
         all_teachers = list_teachers()
-    return render_template("teachers/list.html", teachers=all_teachers, query=query)
+
+    page = request.args.get("page", 1, type=int)
+    teachers_page, total_pages = paginate(all_teachers, page)
+
+    url_pagination = url_for('teachers.teachers_list', q=query)
+    return render_template("teachers/list.html", teachers=teachers_page, query=query,
+                           page=page, total_pages=total_pages, url_pagination=url_pagination)
 
 
 @teachers.route("/add", methods=["GET", "POST"])

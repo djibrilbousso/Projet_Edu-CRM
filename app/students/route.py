@@ -1,5 +1,5 @@
 from flask import Blueprint, render_template, request, redirect, url_for, flash
-from app.utils import login_required, is_valid_email
+from app.utils import login_required, is_valid_email, paginate
 from app.services.student_service import add_student, list_students, delete_student, update_student, get_student_by_id
 
 students_bp = Blueprint("students", __name__, url_prefix="/students")
@@ -24,7 +24,12 @@ def index():
             continue
         results.append(s)
 
-    return render_template("students/list.html", students=results, query=query)
+    page = request.args.get("page", 1, type=int)
+    students_page, total_pages = paginate(results, page)
+
+    url_pagination = url_for('students.index', q=query, niveau=niveau, filiere=filiere)
+    return render_template("students/list.html", students=students_page, query=query,
+                           page=page, total_pages=total_pages, url_pagination=url_pagination)
 
 
 @students_bp.route("/create", methods=["GET", "POST"])

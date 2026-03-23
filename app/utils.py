@@ -16,3 +16,11 @@ def login_required(f):
 def is_valid_email(email):
     pattern = r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$'
     return re.match(pattern, email) is not None
+
+
+def paginate(items, page, per_page=5):
+    total = len(items)
+    start = (page - 1) * per_page
+    end = start + per_page
+    total_pages = (total + per_page - 1) // per_page
+    return items[start:end], total_pages

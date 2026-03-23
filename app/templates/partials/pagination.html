@@ -1,0 +1,14 @@
+{% if total_pages > 1 %}
+<div class="pagination">
+  {% if page > 1 %}
+    <a href="{{ url_pagination }}&page={{ page - 1 }}" class="pg-prev">← Précédent</a>
+  {% endif %}
+  {% for p in range(1, total_pages + 1) %}
+    <a href="{{ url_pagination }}&page={{ p }}"
+       class="{% if p == page %}active{% endif %}">{{ p }}</a>
+  {% endfor %}
+  {% if page < total_pages %}
+    <a href="{{ url_pagination }}&page={{ page + 1 }}" class="pg-next">Suivant →</a>
+  {% endif %}
+</div>
+{% endif %}
