@@ -1,0 +1,128 @@
+/* ===== LOGIN PAGE ===== */
+
+.login-card {
+    border-radius: 20px;
+    overflow: hidden;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.12);
+    max-width: 850px;
+    width: 100%;
+  }
+  
+  .login-left {
+    padding: 3rem;
+    background: #ffffff;
+  }
+  
+  .login-left h2 {
+    font-size: 24px;
+    font-weight: 800;
+    color: #111827;
+  }
+  
+  .login-right {
+    background: linear-gradient(135deg, #07617D 0%, #0891b2 100%);
+    color: white;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 3rem;
+    text-align: center;
+  }
+  
+  .login-right h2 {
+    font-size: 2rem;
+    font-weight: 800;
+    color: white;
+    line-height: 1.3;
+  }
+  
+  .login-right p {
+    opacity: 0.85;
+    font-size: 15px;
+    margin-top: 1rem;
+  }
+  
+  .btn-login {
+    width: 100%;
+    padding: 13px;
+    background: #F9A828;
+    color: white;
+    border: none;
+    border-radius: 12px;
+    font-size: 15px;
+    font-weight: 700;
+    font-family: 'Montserrat', sans-serif;
+    cursor: pointer;
+    transition: background 0.15s, transform 0.1s;
+    margin-top: 0.5rem;
+  }
+  
+  .btn-login:hover {
+    background: #e09520;
+    transform: translateY(-1px);
+  }
+  
+  .hint-text {
+    font-size: 12px;
+    text-align: center;
+    color: #9ca3af;
+    margin-top: 1rem;
+  }
+
+  /* ===== BODY LOGIN ===== */
+body {
+    background: #f0f2f7;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Montserrat', sans-serif;
+  }
+  
+  /* ===== LOGO ===== */
+  .logo-icon {
+    width: 42px;
+    height: 42px;
+    background: linear-gradient(135deg, #07617D 0%, #0891b2 100%);
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+  
+  .logo-text {
+    font-size: 20px;
+    font-weight: 800;
+    color: #111827;
+  }
+
+  /* ===== FORM ===== */
+.form-label {
+    font-size: 13px;
+    font-weight: 600;
+    color: #111827;
+    margin-bottom: 6px;
+    display: block;
+  }
+  
+  .form-input {
+    width: 100%;
+    padding: 11px 13px;
+    border: 1.5px solid #e5e7eb;
+    border-radius: 10px;
+    font-size: 14px;
+    font-family: 'Montserrat', sans-serif;
+    outline: none;
+    transition: border-color 0.15s;
+    background: white;
+    color: #111827;
+  }
+  
+  .form-input:focus {
+    border-color: #07617D;
+    box-shadow: 0 0 0 3px rgba(7,97,125,0.08);
+  }
+  
+  .form-input::placeholder { color: #9ca3af; }
