@@ -26,7 +26,7 @@ Application Flask modulaire de gestion d'une école, développée en groupe avec
   - Service : vérification d'unicité d'email, `update_student()`, `search_students()`
   - Route : `/students/edit/<id>`, recherche par nom/niveau/filière, validation du format email
 
-### Étudiant 3 — (`etudiant3`) — Gestion Enseignants
+### Étudiant 3 — Seynabou Gueye(`etudiant3`) — Gestion Enseignants
 - Création du blueprint `teachers`
 - Création de `teacher_service.py` :
   - `add_teacher()`
@@ -36,7 +36,7 @@ Application Flask modulaire de gestion d'une école, développée en groupe avec
   - Service : vérification d'unicité d'email, `update_teacher()`, `search_teachers()`, `get_teacher_by_id()`, protection suppression si cours actifs, protection modification spécialité si cours actifs
   - Route : `/teachers/edit/<id>`, recherche par nom, validation du format email
 
-### Étudiant 4 — Fily Thiaw Halima Léna Camara (`etudiant4`) — Gestion Cours
+### Étudiant 4 — Fily Thiaw et Halima Léna Camara (`etudiant4`) — Gestion Cours
 - Création de `course_service.py` :
   - `add_course()`
   - `list_courses()`
