@@ -5,12 +5,13 @@ Application Flask modulaire de gestion d'une école, développée en groupe avec
 ---
 
 ## 👥 Membres du groupe et tâches
-1 — Djibril Bousso
-2 — Thiane Gueye
-3 — Seynabou Gueye
-4 — Fily Thiaw 
-5 — Halima Léna Camara
-6 — Mame Coumba Sall
+
+- 1 — Djibril Bousso
+- 2 — Thiane Gueye
+- 3 — Seynabou Gueye
+- 4 — Fily Thiaw
+- 5 — Halima Léna Camara
+- 6 — Mame Coumba Sall
 
 ### Étudiant 1 — Djibril Bousso (`etudiant1`) — AUTH & Sécurité
 - Création du blueprint `auth`
