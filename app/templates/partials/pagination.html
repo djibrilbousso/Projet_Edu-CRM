@@ -2,6 +2,8 @@
 <div class="pagination">
   {% if page > 1 %}
     <a href="{{ url_pagination }}&page={{ page - 1 }}" class="pg-prev">← Précédent</a>
+  {% else %}
+    <span class="pg-prev disabled">← Précédent</span>
   {% endif %}
   {% for p in range(1, total_pages + 1) %}
     <a href="{{ url_pagination }}&page={{ p }}"
@@ -9,6 +11,8 @@
   {% endfor %}
   {% if page < total_pages %}
     <a href="{{ url_pagination }}&page={{ page + 1 }}" class="pg-next">Suivant →</a>
+  {% else %}
+    <span class="pg-next disabled">Suivant →</span>
   {% endif %}
 </div>
 {% endif %}
