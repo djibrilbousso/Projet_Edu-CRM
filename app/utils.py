@@ -18,7 +18,7 @@ def is_valid_email(email):
     return re.match(pattern, email) is not None
 
 
-def paginate(items, page, per_page=5):
+def paginate(items, page, per_page=4):
     total = len(items)
     start = (page - 1) * per_page
     end = start + per_page

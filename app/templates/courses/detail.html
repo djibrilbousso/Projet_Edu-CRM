@@ -35,7 +35,7 @@
   <div class="col-md-4">
     <div class="card p-3">
       <div class="text-muted" style="font-size:11px;font-weight:700;text-transform:uppercase;">Étudiants inscrits</div>
-      <div class="fw-bold mt-1" style="font-size:24px;color:#07617D;">{{ etudiants_inscrits|length }}</div>
+      <div class="fw-bold mt-1" style="font-size:24px;color:#07617D;">{{ total_inscrits }}</div>
     </div>
   </div>
 </div>
@@ -87,6 +87,7 @@
       {% endfor %}
     </tbody>
   </table>
+  {% include 'partials/pagination.html' %}
 </div>
 
 <div class="mt-3">

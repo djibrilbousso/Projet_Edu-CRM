@@ -130,8 +130,17 @@ def detail(course_id):
     # Récupérer l'enseignant
     from app.services.teacher_service import get_teacher_by_id
     teacher = get_teacher_by_id(course["teacher_id"])
-    
+
+    page = request.args.get("page", 1, type=int)
+    total_inscrits = len(etudiants_inscrits)
+    etudiants_page, total_pages = paginate(etudiants_inscrits, page)
+    url_pagination = url_for('courses.detail', course_id=course_id)
+
     return render_template("courses/detail.html",
                            course=course,
-                           etudiants_inscrits=etudiants_inscrits,
-                           teacher=teacher)
+                           etudiants_inscrits=etudiants_page,
+                           total_inscrits=total_inscrits,
+                           teacher=teacher,
+                           page=page,
+                           total_pages=total_pages,
+                           url_pagination=url_pagination)
