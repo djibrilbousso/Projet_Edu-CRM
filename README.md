@@ -40,8 +40,17 @@ Application Flask modulaire de gestion d'une école, développée en groupe avec
   - `list_teachers()`
   - `delete_teacher()`
 - **Ajout par Halima Léna Camara** :
-  - Service : vérification d'unicité d'email, `update_teacher()`, `search_teachers()`, `get_teacher_by_id()`, protection suppression si cours actifs, protection modification spécialité si cours actifs
-  - Route : `/teachers/edit/<id>`, recherche par nom, validation du format email
+  - Service :
+    - Vérification d'unicité d'email avant ajout
+    - `update_teacher()` — modification des informations d'un enseignant
+    - `search_teachers()` — recherche d'un enseignant par nom
+    - `get_teacher_by_id()` — récupérer un enseignant par son ID
+    - Protection suppression : vérifie que l'enseignant n'a pas de cours actifs avant de supprimer
+    - Protection modification : vérifie que la spécialité ne peut pas être changée si l'enseignant a des cours actifs
+  - Route :
+    - `/teachers/edit/<id>` — page de modification d'un enseignant
+    - Recherche par nom dans la liste
+    - Validation du format email avant enregistrement
 
 ### Étudiant 4 — Fily Thiaw et Halima Léna Camara (`etudiant4`) — Gestion Cours
 - Création de `course_service.py` :
