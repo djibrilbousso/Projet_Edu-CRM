@@ -134,7 +134,7 @@ def detail(course_id):
     page = request.args.get("page", 1, type=int)
     total_inscrits = len(etudiants_inscrits)
     etudiants_page, total_pages = paginate(etudiants_inscrits, page)
-    url_pagination = url_for('courses.detail', course_id=course_id)
+    url_pagination = url_for('courses.detail', course_id=course_id, _anchor=None) + '?'
 
     return render_template("courses/detail.html",
                            course=course,
