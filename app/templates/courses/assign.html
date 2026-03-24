@@ -1,0 +1,105 @@
+{% extends 'base.html' %}
+
+{% block title %}Inscrire un étudiant{% endblock %}
+{% block topbar_title %}Cours{% endblock %}
+{% block page_title %}Inscrire un étudiant{% endblock %}
+{% block page_subtitle %}Ajouter un étudiant au cours : {{ course.title }}{% endblock %}
+
+{% block content %}
+<div class="card">
+
+  <!-- Filtres -->
+  <form method="GET" action="{{ url_for('courses.assign', course_id=course.id) }}" class="mb-4">
+    <div class="row g-2">
+      <div class="col-md-4">
+        <label class="form-label">Filtrer par niveau</label>
+        <select name="niveau" class="form-input">
+          <option value="">-- Choisir un niveau --</option>
+          <option value="L1" {% if niveau == 'L1' %}selected{% endif %}>L1</option>
+          <option value="L2" {% if niveau == 'L2' %}selected{% endif %}>L2</option>
+          <option value="L3" {% if niveau == 'L3' %}selected{% endif %}>L3</option>
+          <option value="M1" {% if niveau == 'M1' %}selected{% endif %}>M1</option>
+          <option value="M2" {% if niveau == 'M2' %}selected{% endif %}>M2</option>
+        </select>
+      </div>
+      <div class="col-md-4">
+        <label class="form-label">Filtrer par filière</label>
+        <select name="filiere" class="form-input">
+          <option value="">-- Choisir une filière --</option>
+          <option value="GLRS" {% if filiere == 'GLRS' %}selected{% endif %}>GLRS</option>
+          <option value="CPD" {% if filiere == 'CPD' %}selected{% endif %}>CPD</option>
+          <option value="CDSD" {% if filiere == 'CDSD' %}selected{% endif %}>CDSD</option>
+        </select>
+      </div>
+      <div class="col-md-4 d-flex align-items-end">
+        <button type="submit" class="btn-primary w-100">
+          <i class="bi bi-funnel"></i> Filtrer
+        </button>
+      </div>
+    </div>
+  </form>
+
+  <!-- Formulaire inscription -->
+  <form method="POST">
+    <div class="row g-3">
+      <div class="col-md-6">
+        <label class="form-label">Cours</label>
+        <input type="text" class="form-input"
+               value="{{ course.title }}" disabled>
+      </div>
+      <div class="col-md-6">
+        <label class="form-label">Étudiant à inscrire</label>
+        {% if not niveau or not filiere %}
+          <div class="p-3" style="background:#fef3c7;border-radius:10px;font-size:13px;color:#92400e;">
+            <i class="bi bi-exclamation-triangle me-2"></i>
+            Veuillez sélectionner un niveau et une filière pour voir les étudiants disponibles.
+          </div>
+        {% elif students %}
+          <select name="student_id" class="form-input" required>
+            <option value="">-- Choisir un étudiant --</option>
+            {% for s in students %}
+              <option value="{{ s.id }}">{{ s.name }} — {{ s.niveau }} {{ s.filiere }}</option>
+            {% endfor %}
+          </select>
+        {% else %}
+          <div class="p-3" style="background:#fee2e2;border-radius:10px;font-size:13px;color:#991b1b;">
+            <i class="bi bi-people me-2"></i>
+            Aucun étudiant trouvé pour ce niveau et cette filière.
+          </div>
+        {% endif %}
+      </div>
+    </div>
+
+    <!-- Étudiants déjà inscrits -->
+    <div class="mt-3 p-3" style="background:#f8f9fb;border-radius:10px;">
+      <div class="fw-semibold mb-2" style="font-size:13px;">
+        <i class="bi bi-people me-1" style="color:#07617D;"></i>
+        Étudiants déjà inscrits ({{ course.student_ids|length }})
+      </div>
+      {% if course.student_ids %}
+        <div class="d-flex flex-wrap gap-2">
+          {% for sid in course.student_ids %}
+            <span class="badge-niveau">ID #{{ sid }}</span>
+          {% endfor %}
+        </div>
+      {% else %}
+        <p class="text-muted" style="font-size:13px;">Aucun étudiant inscrit pour l'instant.</p>
+      {% endif %}
+    </div>
+
+    <div class="d-flex justify-content-between align-items-center mt-4 pt-3"
+         style="border-top:1px solid var(--border);">
+      <span class="text-muted" style="font-size:13px;">Tous les champs sont obligatoires</span>
+      <div class="d-flex gap-2">
+        <a href="{{ url_for('courses.index') }}" class="btn-ghost">Annuler</a>
+        {% if niveau and filiere and students %}
+          <button type="submit" class="btn-primary">
+            <i class="bi bi-person-check-fill"></i> Inscrire
+          </button>
+        {% endif %}
+      </div>
+    </div>
+
+  </form>
+</div>
+{% endblock %}
